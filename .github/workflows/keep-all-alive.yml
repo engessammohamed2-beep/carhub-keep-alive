@@ -1,0 +1,28 @@
+name: Keep All 3 Projects Alive
+
+on:
+  schedule:
+    - cron: '0 9 */2 * *'
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1- Ping CarHub
+        run: |
+          curl -X GET "https://bnmaqdrwnnbqiivhcdns.supabase.co/rest/v1/sheet_rows?select=tab&limit=1" \
+          -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"
+
+      - name: 2- Ping NEW idea-360
+        run: |
+          curl -X GET "https://agxoxchosqctlcojiwehd.supabase.co/rest/v1/suppliers?select=id&limit=1" \
+          -H "apikey: ${{ secrets.SUPABASE_IDEA360_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_IDEA360_KEY }}"
+
+      - name: 3- Ping IDEA MOHTSBE
+        run: |
+          curl -X GET "https://avfooxzwzlvmxockdngv.supabase.co/rest/v1/venues?select=id&limit=1" \
+          -H "apikey: ${{ secrets.SUPABASE_MOHTSBE_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_MOHTSBE_KEY }}"
