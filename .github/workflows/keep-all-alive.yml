@@ -7,12 +7,12 @@ jobs:
   keep-alive:
     runs-on: ubuntu-latest
     steps:
-      - name: 1- Ping CarHub
+      - name: Ping All Projects
         run: |
-          curl -s "https://bnmaqdrwnnbqiivhcdns.supabase.co/rest/v1/sheet_rows?select=tab&limit=1" -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" || true
-      - name: 2- Ping NEW idea-360
-        run: |
-          curl -s "https://agxoxchosqctlcojwehd.supabase.co/rest/v1/suppliers?select=id&limit=1" -H "apikey: ${{ secrets.SUPABASE_IDEA360_KEY }}" -H "Authorization: Bearer ${{ secrets.SUPABASE_IDEA360_KEY }}" || true
-      - name: 3- Ping IDEA MOHTSBE
-        run: |
-          curl -s "https://avfooxzwzlvmxockdngv.supabase.co/rest/v1/venues?select=id&limit=1" -H "apikey: ${{ secrets.SUPABASE_MOHTSBE_KEY }}" -H "Authorization: Bearer ${{ secrets.SUPABASE_MOHTSBE_KEY }}" || true
+          echo "Pinging CarHub..."
+          curl -s https://bnmaqdrwnnbqiivhcdns.supabase.co/ > /dev/null && echo "CarHub OK" || echo "CarHub fail but continue"
+          echo "Pinging idea-360..."
+          curl -s https://agxoxchosqctlcojwehd.supabase.co/ > /dev/null && echo "idea-360 OK" || echo "idea-360 fail but continue"
+          echo "Pinging MOHTSBE..."
+          curl -s https://avfooxzwzlvmxockdngv.supabase.co/ > /dev/null && echo "MOHTSBE OK" || echo "MOHTSBE fail but continue"
+          echo "All done - 3 projects pinged!"
