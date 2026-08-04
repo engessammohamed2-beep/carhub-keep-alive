@@ -11,18 +11,24 @@ jobs:
     steps:
       - name: 1- Ping CarHub
         run: |
-          curl -X GET "https://bnmaqdrwnnbqiivhcdns.supabase.co/rest/v1/sheet_rows?select=tab&limit=1" \
+          echo "Pinging CarHub..."
+          curl -s -o /dev/null -w "CarHub Status: %{http_code}\n" "https://bnmaqdrwnnbqiivhcdns.supabase.co/rest/v1/sheet_rows?select=tab&limit=1" \
           -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-          -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" || echo "CarHub ping finished with warning"
 
       - name: 2- Ping NEW idea-360
         run: |
-          curl -X GET "https://agxoxchosqctlcojiwehd.supabase.co/rest/v1/suppliers?select=id&limit=1" \
+          echo "Pinging NEW idea-360..."
+          curl -s -o /dev/null -w "Idea360 Status: %{http_code}\n" "https://agxoxchosqctlcojiwehd.supabase.co/rest/v1/suppliers?select=id&limit=1" \
           -H "apikey: ${{ secrets.SUPABASE_IDEA360_KEY }}" \
-          -H "Authorization: Bearer ${{ secrets.SUPABASE_IDEA360_KEY }}"
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_IDEA360_KEY }}" || echo "Idea360 ping finished with warning"
 
       - name: 3- Ping IDEA MOHTSBE
         run: |
-          curl -X GET "https://avfooxzwzlvmxockdngv.supabase.co/rest/v1/venues?select=id&limit=1" \
+          echo "Pinging IDEA MOHTSBE..."
+          curl -s -o /dev/null -w "MOHTSBE Status: %{http_code}\n" "https://avfooxzwzlvmxockdngv.supabase.co/rest/v1/venues?select=id&limit=1" \
           -H "apikey: ${{ secrets.SUPABASE_MOHTSBE_KEY }}" \
-          -H "Authorization: Bearer ${{ secrets.SUPABASE_MOHTSBE_KEY }}"
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_MOHTSBE_KEY }}" || echo "MOHTSBE ping finished with warning"
+          
+      - name: Done
+        run: echo "All 3 pings attempted! Check status codes above - 200 is success."
